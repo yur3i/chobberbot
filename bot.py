@@ -17,43 +17,26 @@ logger  = logging.getLogger(__name__)
 def start(update, context):
     update.message.reply_text("neurolinguistic programming.")
 
-def markov_fn(n, p):
-    msg = ""
-    try:
-        msg = p.gen(int(context.args[0]))
-    except:
-        msg = p.gen(50)
-    return msg
+def markov_fn(p):
+    def retfun(update, context):
+        msg = ""
+        if(len(context.args) > 0):
+            try:
+                msg = p.gen(int(context.args[0]))
+            except:
+                msg = p.gen(50)
+        else:
+            msg = p.gen(50)
+        update.message.reply_text(msg)
+    return retfun
 
-def chob(update, context):
-    if(len(context.args) > 0):
-        msg = markov_fn(context.args[0], asa)
-    else:
-        msg = markov_fn(50, asa)
-    update.message.reply_text(msg)
-
-def bran(update, context):
-    if(len(context.args) > 0):
-        msg = markov_fn(context.args[0], asa)
-    else:
-        msg = markov_fn(50, asa)
-    update.message.reply_text(msg)
-
-def asar(update, context):
-    if(len(context.args) > 0):
-        msg = markov_fn(context.args[0], asa)
-    else:
-        msg = markov_fn(50, asa)
-    update.message.reply_text(msg)
-    
 def main():
     updater = Updater(key, use_context=True)
     dispatcher = updater.dispatcher
-
     dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("chob", chob))    
-    dispatcher.add_handler(CommandHandler("bran", bran))
-    dispatcher.add_handler(CommandHandler("asar", asar))        
+    dispatcher.add_handler(CommandHandler("chob", markov_fn(chobber)))    
+    dispatcher.add_handler(CommandHandler("bran", markov_fn(brando)))
+    dispatcher.add_handler(CommandHandler("asar", markov_fn(asa)))
     updater.start_polling()
     updater.idle()
 

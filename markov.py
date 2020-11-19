@@ -16,20 +16,21 @@ class Markov():
             yield (self.corpus[i], self.corpus[i+1])
 
     def gen(self, n):
-        first_word = np.random.choice(self.corpus)
+        first_word = self.corpus[np.random.randint(0,len(self.corpus))]
         while first_word.islower():
-            first_word = np.random.choice(self.corpus)
+            first_word = self.corpus[np.random.randint(0,len(self.corpus))]
         chain = [first_word]
-        word = np.random.choice(self.word_dict[chain[-1]])
+        words = self.word_dict[chain[-1]]
+        word = words[np.random.randint(0,len(words))]
         i = 0
         while not word.endswith("."):
-            word = np.random.choice(self.word_dict[chain[-1]])
+            words = self.word_dict[chain[-1]]
+            word = words[np.random.randint(0,len(words))]
             chain.append(word)
             i = i+1
             if i == n:
                 break
         return ' '.join(chain)        
-
 
 from markov import Markov
 m = Markov("chob.txt")

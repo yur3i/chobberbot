@@ -12,6 +12,9 @@ key = open("key", encoding="utf8").readline()
 chobber = Markov("chob.txt")
 asa     = Markov("asar.txt")
 brando  = Markov("bran.txt")
+josh    = Markov("jush.txt")
+jorde   = Markov("me.txt")
+
 logger  = logging.getLogger(__name__)
 
 def start(update, context):
@@ -37,6 +40,8 @@ def main():
     dispatcher.add_handler(CommandHandler("chob", markov_fn(chobber)))    
     dispatcher.add_handler(CommandHandler("bran", markov_fn(brando)))
     dispatcher.add_handler(CommandHandler("asar", markov_fn(asa)))
+    dispatcher.add_handler(CommandHandler("jush", markov_fn(josh)))
+    dispatcher.add_handler(CommandHandler("jurg", markov_fn(jorde)))
     updater.start_polling()
     updater.idle()
 

@@ -33,7 +33,6 @@ def main():
     updater = Updater(key, use_context=True)
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CommandHandler("start", start))
-
     for f in os.listdir():
         name, ext = os.path.splitext(f)[1]
         if ext != ".txt":

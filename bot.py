@@ -29,6 +29,14 @@ def markov_fn(p):
 
     return retfun
 
+def add_chess(update, context):
+    add_game(' '.join(context.args))
+    update.message.reply_text("Added game")
+
+def print_board(update, context):
+    df = pandas.read_csv("chess.csv")
+    update.message.reply_text(df.sort_values(by=['p'], ascending=False).to_string())
+
 def main():
     updater = Updater(key, use_context=True)
     dispatcher = updater.dispatcher
@@ -40,8 +48,10 @@ def main():
         dispatcher.add_handler(
             CommandHandler(name, markov_fn(Markov(f)))
         )
+    
     updater.start_polling()
     updater.idle()
-
+    dispatcher.add_handler(CommandHandler("league", print_board))
+    dispatcher.add_handler(CommandHandler("addgame", add_chess))
 if __name__ == '__main__':
     main()

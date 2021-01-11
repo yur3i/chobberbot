@@ -30,7 +30,7 @@ def markov_fn(p):
     return retfun
 
 def add_chess(update, context):
-    add_game(' '.join(context.args))
+    add_game(context.args)
     update.message.reply_text("Added game")
 
 def print_board(update, context):

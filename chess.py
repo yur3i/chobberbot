@@ -2,7 +2,7 @@ import pandas as pd
 def add_game(game):
     players = ['asa', 'jorde', 'shabha', 'brandon', 'tom']
     if len(game) > 3:
-        league = game[3]
+        league = game[3].lower()
     else:
         league = ""
     csvfile = "{}chess.csv".format(league)

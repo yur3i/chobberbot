@@ -30,11 +30,15 @@ def markov_fn(p):
     return retfun
 
 def add_chess(update, context):
-    add_game(' '.join(context.args))
+    add_game(context.args)
     update.message.reply_text("Added game")
 
 def print_board(update, context):
-    df = pandas.read_csv("chess.csv")
+    if context.args is not None and len(context.args) > 1:
+        league = context.args[0]
+    else:
+        league = ""
+    df = pandas.read_csv("{}chess.csv".format(league))
     update.message.reply_text(df.sort_values(by=['p'], ascending=False).to_string())
 
 def main():

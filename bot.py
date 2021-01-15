@@ -3,6 +3,7 @@ from markov import Markov
 import logging
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+import pandas
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -46,16 +47,17 @@ def main():
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CommandHandler("start", start))
     for f in os.listdir():
-        name, ext = os.path.splitext(f)[1]
+        name, ext = os.path.splitext(f)
         if ext != ".txt":
             continue
         dispatcher.add_handler(
             CommandHandler(name, markov_fn(Markov(f)))
         )
     
-    updater.start_polling()
-    updater.idle()
     dispatcher.add_handler(CommandHandler("league", print_board))
     dispatcher.add_handler(CommandHandler("addgame", add_chess))
+
+    updater.start_polling()
+    updater.idle()
 if __name__ == '__main__':
     main()

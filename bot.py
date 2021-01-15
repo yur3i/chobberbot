@@ -35,7 +35,7 @@ def add_chess(update, context):
     update.message.reply_text("Added game")
 
 def print_board(update, context):
-    if context.args is not None and len(context.args) > 1:
+    if context.args is not None and len(context.args) == 1:
         league = context.args[0]
     else:
         league = ""
